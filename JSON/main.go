@@ -206,11 +206,12 @@ func json_tags() {
 }
 
 func main() {
-	JSON_work()
-	json_time()
-	json_maps_slices()
-	json_composite_values()
-	json_pointers()
-	stub_json_zadacha()
-	json_tags()
+	// JSON_work()
+	// json_time()
+	// json_maps_slices()
+	// json_composite_values()
+	// json_pointers()
+	// stub_json_zadacha()
+	// json_tags()
+	custom_unmarshalling()
 }
