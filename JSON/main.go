@@ -73,7 +73,24 @@ func json_time() {
 	*/
 }
 
+func json_maps_slices() {
+	nums := []int{1, 3, 5}
+	b, err := json.Marshal(nums)
+	fmt.Println(err, string(b)) ///<! <nil> [1,3,5]
+
+	m := map[string]int{
+		"one":   1,
+		"three": 3,
+		"five":  5,
+	}
+	b, err = json.Marshal(m)
+	fmt.Printf("Err = %v, Marshalled map: %s", err, string(b))
+	///<! Err = <nil>, Marshalled map: {"five":5,"one":1,"three":3}
+
+}
+
 func main() {
-	// JSON_work()
+	JSON_work()
 	json_time()
+	json_maps_slices()
 }
