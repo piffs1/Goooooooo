@@ -175,11 +175,42 @@ func json_pointers() {
 
 }
 
+/*Определяем необходимые поля с помощью json-тегов*/
+func json_tags() {
+	fmt.Println("=============FUNCTION:JSON_TAGS=============")
+	type Person struct {
+		Name      string  `json:"namezzz"` //В json будет "namezzz": "Alice"
+		Age       int     `json:"age"`
+		Weight    float64 `json:"-"` //Заигнорируется
+		IsAwesome bool    `json:"is_awesome"`
+	}
+	alice := Person{
+		Name:      "Alice",
+		Age:       25,
+		Weight:    55.5,
+		IsAwesome: true,
+	}
+
+	b, err := json.MarshalIndent(alice, "", "    ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(b))
+	/*
+		{
+		    "namezzz": "Alice",
+		    "age": 25,
+		    "is_awesome": true
+		}
+	*/
+}
+
 func main() {
-	// JSON_work()
-	// json_time()
-	// json_maps_slices()
-	// json_composite_values()
-	// json_pointers()
+	JSON_work()
+	json_time()
+	json_maps_slices()
+	json_composite_values()
+	json_pointers()
 	stub_json_zadacha()
+	json_tags()
 }
