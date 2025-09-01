@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Демонстрация работы маршалинга json
+// Демонстрация работы маршалинга json на примере простой структуры
 func JSON_work() {
 	/*Кодирование в JSON. Опишем тип Person*/
 	type Person struct {
@@ -73,6 +73,7 @@ func json_time() {
 	*/
 }
 
+/*Маршаллим карты и слайсы*/
 func json_maps_slices() {
 	nums := []int{1, 3, 5}
 	b, err := json.Marshal(nums)
@@ -89,8 +90,96 @@ func json_maps_slices() {
 
 }
 
+/*Маршаллим составные значения*/
+func json_composite_values() {
+	type Address struct {
+		Country string
+		City    string
+	}
+
+	type Person struct {
+		Name      string
+		Residence Address
+	}
+
+	paris := Address{"France", "Paris"}
+
+	alice := Person{
+		Name:      "Alice",
+		Residence: paris,
+	}
+	/* MarshalIndent вывод в удобном формате.*/
+	b, _ := json.MarshalIndent(alice, "", "    ")
+	fmt.Println(string(b))
+	/*
+			{
+		    "Name": "Alice",
+		    "Residence": {
+		        "Country": "France",
+		        "City": "Paris"
+		    }
+		}
+	*/
+
+	b, _ = json.MarshalIndent(alice, "BORIS_", "GRECHA")
+	/*
+		{
+		BORIS_GRECHA"Name": "Alice",
+		BORIS_GRECHA"Residence": {
+		BORIS_GRECHAGRECHA"Country": "France",
+		BORIS_GRECHAGRECHA"City": "Paris"
+		BORIS_GRECHA}
+		BORIS_}
+	*/
+	fmt.Println(string(b))
+}
+
+/*Маршаллим структуры с указателями*/
+func json_pointers() {
+	/*Работает и в сложных случаях. Размыеновывает указатель и показывает поля в значении*/
+	type Address struct {
+		Country string
+		City    string
+	}
+
+	type Person struct {
+		Name    string
+		Friends []*Person
+	}
+
+	emma := Person{Name: "Emma"}
+	grace := Person{Name: "Grace"}
+
+	alice := Person{
+		Name:    "Alice",
+		Friends: []*Person{&emma, &grace},
+	}
+
+	b, _ := json.MarshalIndent(alice, "", "    ")
+	fmt.Println(string(b))
+	//У Алисы друг Эмма и Грейс. У Эммы и Грейс нет друзей, поэтому Friend = NIULL
+	/*
+			{
+		    "Name": "Alice",
+		    "Friends": [
+		        {
+		            "Name": "Emma",
+		            "Friends": null
+		        },
+		        {
+		            "Name": "Grace",
+		            "Friends": null
+		        }
+		    ]
+		}*/
+
+}
+
 func main() {
-	JSON_work()
-	json_time()
-	json_maps_slices()
+	// JSON_work()
+	// json_time()
+	// json_maps_slices()
+	// json_composite_values()
+	// json_pointers()
+	stub_json_zadacha()
 }
