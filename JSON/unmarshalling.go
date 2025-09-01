@@ -93,3 +93,38 @@ func custom_unmarshalling() {
 	fmt.Println(err, n)
 	// <nil> impossible!
 }
+
+/*ВЫБОРОЧНЫЕ ПОЛЯ!*/
+func выборочные_поля() {
+	/*Unmarshall игнорирует все поля, кроме Name*/
+	type Person struct {
+		Name string
+	}
+
+	/*Или можно так. Если нам нужно другое наименования поля*/
+	type AnotherPerson struct {
+		Val string `json:"name"`
+	}
+	src := `{
+    "name": "Alice",
+    "is_awesome": true,
+    "residence": {
+        "country": "France",
+        "city": "Paris"
+    },
+    "friends": [
+        { "name": "Emma" },
+        { "name": "Grace" }
+    ]
+}`
+
+	var alice Person
+	err := json.Unmarshal([]byte(src), &alice)
+	fmt.Println(err, alice)
+	// <nil> {Alice}
+	var aliceToo AnotherPerson
+	err = json.Unmarshal([]byte(src), &aliceToo)
+	fmt.Println(err, aliceToo)
+	// <nil> {Alice}
+
+}

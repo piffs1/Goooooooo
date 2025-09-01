@@ -213,5 +213,6 @@ func main() {
 	// json_pointers()
 	// stub_json_zadacha()
 	// json_tags()
-	custom_unmarshalling()
+	// custom_unmarshalling()
+	выборочные_поля()
 }
